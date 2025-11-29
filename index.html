@@ -47,16 +47,34 @@
       .transition-all-300 {
         transition: all 300ms ease-in-out;
       }
+      .animate-pulse-slow {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      .animate-slide-up {
+        animation: slideUp 0.3s ease-in-out;
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
   </style>
 </head>
 
 <body class="font-inter bg-neutral text-dark min-h-screen flex flex-col">
   <!-- 导航栏 -->
-  <header id="navbar" class="bg-white shadow-md fixed w-full z-50 transition-all duration-300">
+  <header id="navbar" class="bg-white shadow-md fixed w-full z-50 transition-all duration-300 py-3">
     <div class="container mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center space-x-2">
-        <!-- 替换为你提供的学校校门图片 -->
         <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/40eb5adf30c1225975290792b98394dd~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779890545&x-signature=5Wyhu1%2B7m%2Bj3IMPA29mpm3Clf6k%3D" alt="学校Logo" class="h-10 w-10 object-cover rounded-md">
         <h1 class="text-xl font-bold text-primary">高桥实验学校论坛</h1>
       </div>
@@ -78,9 +96,9 @@
             <span id="user-nickname" class="hidden md:inline font-medium">游客</span>
             <i class="fa fa-angle-down text-neutral-dark"></i>
           </button>
-          <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50">
-            <a href="#profile" class="block px-4 py-2 text-sm hover:bg-neutral transition-colors">个人资料</a>
-            <a href="#settings" class="block px-4 py-2 text-sm hover:bg-neutral transition-colors">设置</a>
+          <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden z-50 animate-slide-up">
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-neutral transition-colors" onclick="showMyProfile()">个人资料</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-neutral transition-colors" onclick="showSettings()">设置</a>
             <div class="border-t border-gray-100 my-1"></div>
             <a href="#" id="logout-btn" class="block px-4 py-2 text-sm text-secondary hover:bg-neutral transition-colors">退出登录</a>
           </div>
@@ -92,7 +110,7 @@
     </div>
     
     <!-- 移动端菜单 -->
-    <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t animate-slide-up">
       <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
         <a href="#school-intro" class="py-2 font-medium hover:text-primary transition-colors">学校简介</a>
         <a href="#forum" class="py-2 font-medium hover:text-primary transition-colors">交流论坛</a>
@@ -106,7 +124,6 @@
     <!-- 英雄区 -->
     <section class="relative bg-primary text-white py-16 md:py-24 overflow-hidden">
       <div class="absolute inset-0 opacity-10">
-        <!-- 替换为你提供的学校校门图片 -->
         <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/40eb5adf30c1225975290792b98394dd~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779890545&x-signature=5Wyhu1%2B7m%2Bj3IMPA29mpm3Clf6k%3D" alt="" class="w-full h-full object-cover">
       </div>
       <div class="container mx-auto px-4 relative z-10">
@@ -135,7 +152,6 @@
         
         <div class="grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <!-- 替换为你提供的学校校门图片 -->
             <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/40eb5adf30c1225975290792b98394dd~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779890545&x-signature=5Wyhu1%2B7m%2Bj3IMPA29mpm3Clf6k%3D" alt="桐乡高桥实验学校" class="w-full h-auto rounded-lg shadow-lg object-cover">
           </div>
           
@@ -188,7 +204,6 @@
               <i class="fa fa-image text-secondary mr-2"></i>
               校园环境
             </h3>
-            <!-- 替换为你提供的“生长教育”墙面图片 -->
             <img src="https://p6-doubao-sign.byteimg.com/tos-cn-i-qvj2lq49k0/56104653285a4530893532878d73975a~tplv-qvj2lq49k0-resize-crop-v1:0:0:720:540:720:540.jpeg?rk3s=19ff00fe&x-expires=1779890545&x-signature=U%2B2sG8v0X6j1LqV63%2B%2B72d96Q8Q%3D" alt="生长教育主题墙面" class="w-full h-auto rounded-lg shadow-lg">
             <p class="text-neutral-dark mt-4 text-center">校园内的"生长教育"主题文化墙，体现了学校的核心理念</p>
           </div>
@@ -242,138 +257,21 @@
         </div>
         
         <!-- 帖子列表 -->
-        <div class="space-y-6">
-          <!-- 帖子1 -->
-          <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-all">
-            <div class="flex justify-between items-start mb-4">
-              <div class="flex items-center space-x-3">
-                <img src="https://picsum.photos/id/1025/200/200" alt="用户头像" class="w-10 h-10 rounded-full object-cover cursor-pointer" onclick="showUserProfile(2)">
-                <div>
-                  <h4 class="font-medium cursor-pointer" onclick="showUserProfile(2)">阳光少年</h4>
-                  <p class="text-xs text-neutral-dark">2小时前</p>
-                </div>
-              </div>
-              <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">校园活动</span>
-            </div>
-            
-            <h3 class="text-lg font-semibold mb-3 hover:text-primary transition-colors cursor-pointer">学校秋季运动会将于下周五举行，大家准备好了吗？</h3>
-            
-            <p class="text-neutral-dark mb-4">听说今年运动会增加了不少新项目，还有团体接力赛，有没有同学想一起组队的？我们班还缺几个人...</p>
-            
-            <div class="flex flex-wrap gap-4 mb-4">
-              <img src="https://picsum.photos/id/1060/300/200" alt="帖子图片" class="w-24 h-24 object-cover rounded-lg">
-              <img src="https://picsum.photos/id/1062/300/200" alt="帖子图片" class="w-24 h-24 object-cover rounded-lg">
-            </div>
-            
-            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
-              <div class="flex space-x-6">
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-thumbs-o-up"></i>
-                  <span>32</span>
-                </button>
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-comment-o"></i>
-                  <span>18</span>
-                </button>
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-share-alt"></i>
-                  <span>5</span>
-                </button>
-              </div>
-              <button class="text-neutral-dark hover:text-primary transition-colors">
-                <i class="fa fa-bookmark-o"></i>
-              </button>
-            </div>
-          </div>
-          
-          <!-- 帖子2 -->
-          <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-all">
-            <div class="flex justify-between items-start mb-4">
-              <div class="flex items-center space-x-3">
-                <img src="https://picsum.photos/id/1074/200/200" alt="用户头像" class="w-10 h-10 rounded-full object-cover cursor-pointer" onclick="showUserProfile(3)">
-                <div>
-                  <h4 class="font-medium cursor-pointer" onclick="showUserProfile(3)">学霸君</h4>
-                  <p class="text-xs text-neutral-dark">昨天 15:30</p>
-                </div>
-              </div>
-              <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">学习交流</span>
-            </div>
-            
-            <h3 class="text-lg font-semibold mb-3 hover:text-primary transition-colors cursor-pointer">分享一些数学期中考试的复习技巧，希望对大家有帮助</h3>
-            
-            <p class="text-neutral-dark mb-4">1. 重点复习函数和几何部分，这两部分占分比较大<br>2. 多做模拟题，尤其是往年的真题<br>3. 整理错题本，考前再看一遍...<br><br>需要详细复习资料的可以留言，我可以分享给大家~</p>
-            
-            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
-              <div class="flex space-x-6">
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-thumbs-o-up"></i>
-                  <span>78</span>
-                </button>
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-comment-o"></i>
-                  <span>42</span>
-                </button>
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-share-alt"></i>
-                  <span>23</span>
-                </button>
-              </div>
-              <button class="text-neutral-dark hover:text-primary transition-colors">
-                <i class="fa fa-bookmark-o"></i>
-              </button>
-            </div>
-          </div>
-          
-          <!-- 帖子3 -->
-          <div class="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-all">
-            <div class="flex justify-between items-start mb-4">
-              <div class="flex items-center space-x-3">
-                <img src="https://picsum.photos/id/1082/200/200" alt="用户头像" class="w-10 h-10 rounded-full object-cover cursor-pointer" onclick="showUserProfile(4)">
-                <div>
-                  <h4 class="font-medium cursor-pointer" onclick="showUserProfile(4)">文艺委员</h4>
-                  <p class="text-xs text-neutral-dark">3天前</p>
-                </div>
-              </div>
-              <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">社团招新</span>
-            </div>
-            
-            <h3 class="text-lg font-semibold mb-3 hover:text-primary transition-colors cursor-pointer">学校话剧社招新啦！热爱表演的同学看过来~</h3>
-            
-            <p class="text-neutral-dark mb-4">新学期话剧社开始招新了！无论你有没有表演经验，只要你热爱戏剧、喜欢表达，都欢迎加入我们！<br><br>第一次招新会议：本周五下午放学后，教学楼302教室<br>联系人：李同学（初二3班）</p>
-            
-            <div class="flex flex-wrap gap-4 mb-4">
-              <img src="https://picsum.photos/id/1083/300/200" alt="帖子图片" class="w-24 h-24 object-cover rounded-lg">
-              <img src="https://picsum.photos/id/1084/300/200" alt="帖子图片" class="w-24 h-24 object-cover rounded-lg">
-              <img src="https://picsum.photos/id/1085/300/200" alt="帖子图片" class="w-24 h-24 object-cover rounded-lg">
-            </div>
-            
-            <div class="flex justify-between items-center pt-3 border-t border-gray-100">
-              <div class="flex space-x-6">
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-thumbs-o-up"></i>
-                  <span>56</span>
-                </button>
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-comment-o"></i>
-                  <span>31</span>
-                </button>
-                <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors">
-                  <i class="fa fa-share-alt"></i>
-                  <span>17</span>
-                </button>
-              </div>
-              <button class="text-neutral-dark hover:text-primary transition-colors">
-                <i class="fa fa-bookmark-o"></i>
-              </button>
-            </div>
-          </div>
+        <div class="space-y-6" id="posts-container">
+          <!-- 帖子会通过JS动态加载 -->
         </div>
         
         <!-- 加载更多 -->
         <div class="text-center mt-10">
-          <button class="bg-white text-primary border border-primary px-6 py-3 rounded-lg hover:bg-primary/5 transition-colors">
+          <button id="load-more-btn" class="bg-white text-primary border border-primary px-6 py-3 rounded-lg hover:bg-primary/5 transition-colors">
             加载更多 <i class="fa fa-angle-down ml-1"></i>
           </button>
+          <div id="loading-indicator" class="hidden">
+            <div class="inline-block animate-pulse-slow">
+              <i class="fa fa-spinner fa-spin text-primary text-xl"></i>
+              <span class="ml-2">加载中...</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -398,27 +296,27 @@
             </div>
             
             <div class="flex border-b border-gray-200">
-              <button class="flex-1 py-3 text-center font-medium text-primary border-b-2 border-primary">好友 (24)</button>
-              <button class="flex-1 py-3 text-center font-medium text-neutral-dark hover:text-primary transition-colors">群聊 (5)</button>
+              <button class="flex-1 py-3 text-center font-medium text-primary border-b-2 border-primary" id="friends-tab">好友 (2)</button>
+              <button class="flex-1 py-3 text-center font-medium text-neutral-dark hover:text-primary transition-colors" id="groups-tab">群聊 (2)</button>
             </div>
             
-            <div class="h-[calc(100vh-400px)] overflow-y-auto scrollbar-hide">
+            <div class="h-[calc(100vh-400px)] overflow-y-auto scrollbar-hide" id="friends-list">
               <!-- 好友申请提示 -->
-              <div class="p-3 bg-secondary/10 text-secondary flex items-center justify-between cursor-pointer hover:bg-secondary/20 transition-colors">
+              <div class="p-3 bg-secondary/10 text-secondary flex items-center justify-between cursor-pointer hover:bg-secondary/20 transition-colors" id="friend-requests">
                 <div class="flex items-center space-x-3">
                   <i class="fa fa-user-plus text-xl"></i>
                   <div>
                     <p class="font-medium">新的好友申请</p>
-                    <p class="text-xs">3个请求等待处理</p>
+                    <p class="text-xs">1个请求等待处理</p>
                   </div>
                 </div>
-                <span class="bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                <span class="bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">1</span>
               </div>
               
               <!-- 在线好友 -->
               <div class="px-4 py-2 text-xs text-neutral-dark uppercase font-medium">在线好友</div>
               
-              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer bg-primary/5 border-l-4 border-primary">
+              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer bg-primary/5 border-l-4 border-primary" data-friend="阳光少年">
                 <div class="flex items-center space-x-3">
                   <div class="relative">
                     <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-10 h-10 rounded-full object-cover">
@@ -426,43 +324,11 @@
                   </div>
                   <div class="flex-grow min-w-0">
                     <p class="font-medium truncate">阳光少年</p>
-                    <p class="text-xs text-neutral-dark truncate">刚发了新的运动会照片</p>
+                    <p class="text-xs text-neutral-dark truncate" id="last-message-preview">刚发了新的运动会照片</p>
                   </div>
                   <div class="text-right">
                     <p class="text-xs text-neutral-dark">刚刚</p>
-                    <span class="bg-secondary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center mt-1">2</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer">
-                <div class="flex items-center space-x-3">
-                  <div class="relative">
-                    <img src="https://picsum.photos/id/1074/200/200" alt="好友头像" class="w-10 h-10 rounded-full object-cover">
-                    <span class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
-                  </div>
-                  <div class="flex-grow min-w-0">
-                    <p class="font-medium truncate">班长</p>
-                    <p class="text-xs text-neutral-dark truncate">明天的班会主题确定了吗？</p>
-                  </div>
-                  <div class="text-right">
-                    <p class="text-xs text-neutral-dark">10分钟前</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer">
-                <div class="flex items-center space-x-3">
-                  <div class="relative">
-                    <img src="https://picsum.photos/id/1082/200/200" alt="好友头像" class="w-10 h-10 rounded-full object-cover">
-                    <span class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
-                  </div>
-                  <div class="flex-grow min-w-0">
-                    <p class="font-medium truncate">文艺委员</p>
-                    <p class="text-xs text-neutral-dark truncate">话剧社招新海报设计好了</p>
-                  </div>
-                  <div class="text-right">
-                    <p class="text-xs text-neutral-dark">30分钟前</p>
+                    <span class="bg-secondary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center mt-1" id="unread-count">2</span>
                   </div>
                 </div>
               </div>
@@ -470,7 +336,7 @@
               <!-- 离线好友 -->
               <div class="px-4 py-2 text-xs text-neutral-dark uppercase font-medium">离线好友</div>
               
-              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer">
+              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer" data-friend="学霸君">
                 <div class="flex items-center space-x-3">
                   <div class="relative">
                     <img src="https://picsum.photos/id/1074/200/200" alt="好友头像" class="w-10 h-10 rounded-full object-cover opacity-70">
@@ -484,18 +350,40 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <!-- 群聊列表 -->
+            <div class="h-[calc(100vh-400px)] overflow-y-auto scrollbar-hide hidden" id="groups-list">
+              <div class="px-4 py-2 text-xs text-neutral-dark uppercase font-medium">我的群聊</div>
               
-              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer">
+              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer" data-group="初二(3)班班级群">
                 <div class="flex items-center space-x-3">
                   <div class="relative">
-                    <img src="https://picsum.photos/id/1092/200/200" alt="好友头像" class="w-10 h-10 rounded-full object-cover opacity-70">
+                    <img src="https://picsum.photos/id/177/200/200" alt="群聊头像" class="w-10 h-10 rounded-full object-cover">
+                    <span class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
                   </div>
                   <div class="flex-grow min-w-0">
-                    <p class="font-medium truncate">体育委员</p>
-                    <p class="text-xs text-neutral-dark truncate">记得运动会穿运动鞋</p>
+                    <p class="font-medium truncate">初二(3)班班级群</p>
+                    <p class="text-xs text-neutral-dark truncate">班主任: 下周有家长会</p>
                   </div>
                   <div class="text-right">
-                    <p class="text-xs text-neutral-dark">昨天</p>
+                    <p class="text-xs text-neutral-dark">5分钟前</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="p-3 hover:bg-gray-200 transition-colors cursor-pointer" data-group="篮球社团">
+                <div class="flex items-center space-x-3">
+                  <div class="relative">
+                    <img src="https://picsum.photos/id/178/200/200" alt="群聊头像" class="w-10 h-10 rounded-full object-cover">
+                    <span class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
+                  </div>
+                  <div class="flex-grow min-w-0">
+                    <p class="font-medium truncate">篮球社团</p>
+                    <p class="text-xs text-neutral-dark truncate">队长: 明天下午训练</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-xs text-neutral-dark">1小时前</p>
                   </div>
                 </div>
               </div>
@@ -509,22 +397,22 @@
               <div class="flex items-center space-x-3">
                 <div class="relative">
                   <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-10 h-10 rounded-full object-cover">
-                  <span class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full"></span>
+                  <span class="absolute bottom-0 right-0 h-3 w-3 bg-green-500 border-2 border-white rounded-full animate-pulse"></span>
                 </div>
                 <div>
-                  <p class="font-medium">阳光少年</p>
-                  <p class="text-xs text-neutral-dark">在线 - 正在输入...</p>
+                  <p class="font-medium" id="chat-friend-name">阳光少年</p>
+                  <p class="text-xs text-neutral-dark" id="chat-status">在线 - 正在输入...</p>
                 </div>
               </div>
               
               <div class="flex space-x-4">
-                <button class="p-2 text-neutral-dark hover:text-primary transition-colors">
+                <button class="p-2 text-neutral-dark hover:text-primary transition-colors" id="voice-call-btn">
                   <i class="fa fa-phone"></i>
                 </button>
-                <button class="p-2 text-neutral-dark hover:text-primary transition-colors">
+                <button class="p-2 text-neutral-dark hover:text-primary transition-colors" id="video-call-btn">
                   <i class="fa fa-video-camera"></i>
                 </button>
-                <button class="p-2 text-neutral-dark hover:text-primary transition-colors">
+                <button class="p-2 text-neutral-dark hover:text-primary transition-colors" id="friend-info-btn">
                   <i class="fa fa-info-circle"></i>
                 </button>
               </div>
@@ -532,84 +420,23 @@
             
             <!-- 聊天内容 -->
             <div class="flex-grow p-4 overflow-y-auto scrollbar-hide space-y-4" id="chat-messages">
-              <div class="flex items-end space-x-2 max-w-[80%]">
-                <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-8 h-8 rounded-full object-cover">
-                <div>
-                  <p class="bg-white rounded-lg rounded-tl-none px-4 py-2 shadow-sm">嗨，你看到学校运动会的通知了吗？</p>
-                  <p class="text-xs text-neutral-dark mt-1">14:30</p>
-                </div>
-              </div>
-              
-              <div class="flex items-end justify-end space-x-2 max-w-[80%] ml-auto">
-                <div class="text-right">
-                  <p class="bg-primary text-white rounded-lg rounded-tr-none px-4 py-2 shadow-sm">看到了，下周五对吧？打算报什么项目？</p>
-                  <p class="text-xs text-neutral-dark mt-1">14:32</p>
-                </div>
-                <img src="https://picsum.photos/id/237/200/200" alt="我的头像" class="w-8 h-8 rounded-full object-cover">
-              </div>
-              
-              <div class="flex items-end space-x-2 max-w-[80%]">
-                <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-8 h-8 rounded-full object-cover">
-                <div>
-                  <p class="bg-white rounded-lg rounded-tl-none px-4 py-2 shadow-sm">我想报100米和跳远，你呢？</p>
-                  <p class="text-xs text-neutral-dark mt-1">14:35</p>
-                </div>
-              </div>
-              
-              <div class="flex items-end justify-end space-x-2 max-w-[80%] ml-auto">
-                <div class="text-right">
-                  <p class="bg-primary text-white rounded-lg rounded-tr-none px-4 py-2 shadow-sm">我可能报个接力赛吧，单项不太擅长</p>
-                  <p class="text-xs text-neutral-dark mt-1">14:36</p>
-                </div>
-                <img src="https://picsum.photos/id/237/200/200" alt="我的头像" class="w-8 h-8 rounded-full object-cover">
-              </div>
-              
-              <div class="flex items-end space-x-2 max-w-[80%]">
-                <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-8 h-8 rounded-full object-cover">
-                <div>
-                  <p class="bg-white rounded-lg rounded-tl-none px-4 py-2 shadow-sm">我们班还缺几个人参加团体接力，要不要一起？</p>
-                  <p class="text-xs text-neutral-dark mt-1">14:38</p>
-                </div>
-              </div>
-              
-              <div class="flex items-end space-x-2 max-w-[80%]">
-                <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-8 h-8 rounded-full object-cover">
-                <div>
-                  <p class="bg-white rounded-lg rounded-tl-none px-4 py-2 shadow-sm">我刚拍了几张运动会场地的照片，给你看看</p>
-                  <p class="text-xs text-neutral-dark mt-1">14:39</p>
-                </div>
-              </div>
-              
-              <div class="flex items-end space-x-2 max-w-[80%]">
-                <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-8 h-8 rounded-full object-cover">
-                <div>
-                  <img src="https://picsum.photos/id/1060/400/300" alt="聊天图片" class="rounded-lg max-w-[200px] shadow-sm">
-                  <p class="text-xs text-neutral-dark mt-1">14:40</p>
-                </div>
-              </div>
-              
-              <div class="flex items-end justify-end space-x-2 max-w-[80%] ml-auto">
-                <div class="text-right">
-                  <p class="bg-primary text-white rounded-lg rounded-tr-none px-4 py-2 shadow-sm">看起来不错！那我参加你们班的接力队吧</p>
-                  <p class="text-xs text-neutral-dark mt-1">14:42</p>
-                </div>
-                <img src="https://picsum.photos/id/237/200/200" alt="我的头像" class="w-8 h-8 rounded-full object-cover">
-              </div>
+              <!-- 聊天记录会通过JS动态加载 -->
             </div>
             
             <!-- 聊天输入框 -->
             <div class="p-4 border-t border-gray-200 bg-white">
               <div class="flex items-center space-x-3 mb-2">
-                <button class="p-2 text-neutral-dark hover:text-primary transition-colors">
+                <button class="p-2 text-neutral-dark hover:text-primary transition-colors" id="emoji-btn">
                   <i class="fa fa-smile-o"></i>
                 </button>
-                <button class="p-2 text-neutral-dark hover:text-primary transition-colors">
+                <label for="chat-image-upload" class="p-2 text-neutral-dark hover:text-primary transition-colors cursor-pointer">
                   <i class="fa fa-picture-o"></i>
-                </button>
-                <button class="p-2 text-neutral-dark hover:text-primary transition-colors">
+                </label>
+                <input type="file" id="chat-image-upload" accept="image/*" class="hidden">
+                <button class="p-2 text-neutral-dark hover:text-primary transition-colors" id="file-btn">
                   <i class="fa fa-file-o"></i>
                 </button>
-                <button class="p-2 text-neutral-dark hover:text-primary transition-colors">
+                <button class="p-2 text-neutral-dark hover:text-primary transition-colors" id="voice-btn">
                   <i class="fa fa-microphone"></i>
                 </button>
               </div>
@@ -633,7 +460,6 @@
       <div class="grid md:grid-cols-4 gap-8">
         <div>
           <div class="flex items-center space-x-2 mb-4">
-            <!-- 替换为你提供的学校校门图片 -->
             <img src="https://p26-doubao-search-sign.byteimg.com/labis/image/40eb5adf30c1225975290792b98394dd~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779890545&x-signature=5Wyhu1%2B7m%2Bj3IMPA29mpm3Clf6k%3D" alt="学校Logo" class="h-8 w-8 object-cover rounded-md">
             <h3 class="text-lg font-bold">高桥实验学校论坛</h3>
           </div>
@@ -655,7 +481,7 @@
           <ul class="space-y-2 text-gray-400">
             <li class="flex items-center"><i class="fa fa-map-marker mr-2"></i> 浙江省桐乡市</li>
             <li class="flex items-center"><i class="fa fa-phone mr-2"></i> 0573-88888888</li>
-            <li class="flex items-center"><i class="fa fa-envelope-o mr-2"></i> contact@gqschool.com</li>
+            <li class="flex items-center"><i class="fa fa-envelope-o mr-2"></i> 1253982165@qq.com</li>
           </ul>
         </div>
         
@@ -685,7 +511,7 @@
 
   <!-- 登录/注册模态框 -->
   <div id="auth-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl transform transition-all">
+    <div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl transform transition-all animate-slide-up">
       <div class="text-center mb-6">
         <h3 class="text-2xl font-bold text-dark" id="auth-modal-title">登录</h3>
         <p class="text-neutral-dark mt-1">欢迎回到高桥实验学校论坛</p>
@@ -694,12 +520,14 @@
       <form id="auth-form">
         <div class="mb-4">
           <label for="name" class="block text-sm font-medium text-dark mb-1">姓名</label>
-          <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入你的姓名">
+          <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入你的姓名" required>
+          <div class="hidden text-secondary text-xs mt-1" id="name-error">请输入姓名</div>
         </div>
         
         <div class="mb-6">
           <label for="password" class="block text-sm font-medium text-dark mb-1">密码</label>
-          <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入密码">
+          <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入密码" required minlength="6">
+          <div class="hidden text-secondary text-xs mt-1" id="password-error">密码长度不能少于6位</div>
         </div>
         
         <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 rounded-lg transition-colors mb-4">
@@ -718,7 +546,7 @@
 
   <!-- 发布帖子模态框 -->
   <div id="post-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-xl w-full max-w-2xl p-6 shadow-2xl transform transition-all max-h-[90vh] overflow-y-auto">
+    <div class="bg-white rounded-xl w-full max-w-2xl p-6 shadow-2xl transform transition-all max-h-[90vh] overflow-y-auto animate-slide-up">
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-2xl font-bold text-dark">发布新帖子</h3>
         <button id="close-post-modal" class="text-neutral-dark hover:text-dark transition-colors">
@@ -729,12 +557,13 @@
       <form id="post-form">
         <div class="mb-4">
           <label for="post-title" class="block text-sm font-medium text-dark mb-1">标题</label>
-          <input type="text" id="post-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入帖子标题">
+          <input type="text" id="post-title" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入帖子标题" required maxlength="50">
+          <div class="hidden text-secondary text-xs mt-1" id="title-error">标题不能为空且长度不超过50字</div>
         </div>
         
         <div class="mb-4">
           <label for="post-category" class="block text-sm font-medium text-dark mb-1">分类</label>
-          <select id="post-category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <select id="post-category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" required>
             <option value="">请选择分类</option>
             <option value="study">学习交流</option>
             <option value="activity">校园活动</option>
@@ -742,11 +571,13 @@
             <option value="help">求助问答</option>
             <option value="chat">闲聊灌水</option>
           </select>
+          <div class="hidden text-secondary text-xs mt-1" id="category-error">请选择分类</div>
         </div>
         
         <div class="mb-4">
           <label for="post-content" class="block text-sm font-medium text-dark mb-1">内容</label>
-          <textarea id="post-content" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入帖子内容..."></textarea>
+          <textarea id="post-content" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="请输入帖子内容..." required minlength="10"></textarea>
+          <div class="hidden text-secondary text-xs mt-1" id="content-error">内容不能为空且长度不低于10字</div>
         </div>
         
         <div class="mb-6">
@@ -757,6 +588,7 @@
             <p class="text-xs text-neutral-dark">支持JPG、PNG格式，最多5张</p>
             <input type="file" multiple accept="image/*" class="hidden" id="post-images">
           </div>
+          <div class="flex flex-wrap gap-2 mt-3" id="image-preview-container"></div>
         </div>
         
         <button type="submit" class="w-full bg-secondary hover:bg-secondary/90 text-white font-medium py-3 rounded-lg transition-colors">
@@ -768,9 +600,9 @@
 
   <!-- 用户资料模态框 -->
   <div id="profile-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-xl w-full max-w-2xl p-6 shadow-2xl transform transition-all">
+    <div class="bg-white rounded-xl w-full max-w-2xl p-6 shadow-2xl transform transition-all animate-slide-up">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-2xl font-bold text-dark">用户资料</h3>
+        <h3 class="text-2xl font-bold text-dark" id="profile-modal-title">用户资料</h3>
         <button id="close-profile-modal" class="text-neutral-dark hover:text-dark transition-colors">
           <i class="fa fa-times text-xl"></i>
         </button>
@@ -780,15 +612,20 @@
         <div class="md:w-1/3 flex flex-col items-center">
           <div class="relative mb-4">
             <img id="profile-avatar" src="https://picsum.photos/id/1025/200/200" alt="用户头像" class="w-32 h-32 rounded-full object-cover border-4 border-primary">
-            <button id="edit-avatar" class="absolute bottom-0 right-0 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center">
+            <label for="avatar-upload" class="absolute bottom-0 right-0 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center cursor-pointer">
               <i class="fa fa-pencil"></i>
-            </button>
+            </label>
+            <input type="file" id="avatar-upload" accept="image/*" class="hidden">
           </div>
           
           <h4 id="profile-name" class="text-xl font-bold mb-1">阳光少年</h4>
           <p id="profile-id" class="text-neutral-dark text-sm mb-4">学号: 20210315</p>
           
-          <button id="add-friend-btn" class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-2 rounded-lg transition-colors w-full">
+          <button id="edit-profile-btn" class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-2 rounded-lg transition-colors w-full mb-2">
+            <i class="fa fa-edit mr-2"></i> 编辑资料
+          </button>
+          
+          <button id="add-friend-btn" class="bg-white border border-primary text-primary hover:bg-primary/5 font-medium px-6 py-2 rounded-lg transition-colors w-full hidden">
             <i class="fa fa-user-plus mr-2"></i> 加为好友
           </button>
         </div>
@@ -813,25 +650,198 @@
           <div>
             <h5 class="text-sm font-medium text-neutral-dark mb-1">发布的帖子</h5>
             <div class="bg-neutral rounded-lg p-3">
-              <p class="text-neutral-dark">共发布了 12 个帖子</p>
+              <p class="text-neutral-dark">共发布了 <span id="post-count">12</span> 个帖子</p>
             </div>
           </div>
           
           <div>
             <h5 class="text-sm font-medium text-neutral-dark mb-1">最近动态</h5>
             <div class="bg-neutral rounded-lg p-3">
-              <p class="text-neutral-dark">2小时前 发布了关于运动会的帖子</p>
+              <p class="text-neutral-dark" id="latest-activity">2小时前 发布了关于运动会的帖子</p>
             </div>
           </div>
+        </div>
+      </div>
+      
+      <!-- 编辑资料表单（默认隐藏） -->
+      <div id="edit-profile-form" class="mt-8 hidden">
+        <h4 class="text-lg font-semibold mb-4">编辑个人资料</h4>
+        <div class="grid md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="edit-nickname" class="block text-sm font-medium text-dark mb-1">昵称</label>
+            <input type="text" id="edit-nickname" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+          </div>
+          <div>
+            <label for="edit-gender" class="block text-sm font-medium text-dark mb-1">性别</label>
+            <select id="edit-gender" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+              <option value="男">男</option>
+              <option value="女">女</option>
+              <option value="保密">保密</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="edit-bio" class="block text-sm font-medium text-dark mb-1">个人简介</label>
+          <textarea id="edit-bio" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+        </div>
+        <div class="flex justify-end gap-3">
+          <button type="button" id="cancel-edit-btn" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            取消
+          </button>
+          <button type="button" id="save-profile-btn" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+            保存修改
+          </button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- 设置模态框 -->
+  <div id="settings-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl w-full max-w-2xl p-6 shadow-2xl transform transition-all animate-slide-up">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-dark">设置</h3>
+        <button id="close-settings-modal" class="text-neutral-dark hover:text-dark transition-colors">
+          <i class="fa fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-6">
+        <div>
+          <h4 class="text-lg font-semibold mb-4">通知设置</h4>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span>新消息通知</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>帖子回复通知</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>好友申请通知</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer" checked>
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">隐私设置</h4>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span>允许陌生人查看我的资料</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>允许陌生人给我发消息</span>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex justify-end">
+          <button id="save-settings-btn" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+            保存设置
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 好友申请模态框 -->
+  <div id="friend-request-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl w-full max-w-md p-6 shadow-2xl transform transition-all animate-slide-up">
+      <div class="text-center mb-6">
+        <h3 class="text-2xl font-bold text-dark">好友申请</h3>
+        <p class="text-neutral-dark mt-1">1个好友申请等待处理</p>
+      </div>
+      
+      <div class="space-y-4 mb-6">
+        <div class="flex items-center justify-between p-3 bg-neutral rounded-lg">
+          <div class="flex items-center space-x-3">
+            <img src="https://picsum.photos/id/1074/200/200" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+            <div>
+              <p class="font-medium">学霸君</p>
+              <p class="text-xs text-neutral-dark">初二(1)班</p>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button class="px-3 py-1 bg-primary text-white text-sm rounded-lg hover:bg-primary/90 transition-colors" onclick="acceptFriendRequest('学霸君')">同意</button>
+            <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-300 transition-colors" onclick="rejectFriendRequest('学霸君')">拒绝</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex justify-end">
+        <button id="close-friend-request-modal" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+          关闭
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 评论模态框 -->
+  <div id="comment-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-xl w-full max-w-2xl p-6 shadow-2xl transform transition-all max-h-[90vh] overflow-y-auto animate-slide-up">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-bold text-dark">评论</h3>
+        <button id="close-comment-modal" class="text-neutral-dark hover:text-dark transition-colors">
+          <i class="fa fa-times text-xl"></i>
+        </button>
+      </div>
+      
+      <div id="comment-content" class="mb-6">
+        <!-- 评论内容会动态加载 -->
+      </div>
+      
+      <div class="border-t border-gray-200 pt-4">
+        <div class="flex items-center space-x-3 mb-4">
+          <input type="text" placeholder="写下你的评论..." id="comment-input" class="flex-grow bg-neutral border border-gray-200 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-primary/50">
+          <button id="submit-comment" class="bg-primary hover:bg-primary/90 text-white rounded-lg px-4 py-2 transition-colors">
+            发表
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 消息通知提示 -->
+  <div id="notification-toast" class="fixed bottom-4 right-4 bg-dark text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 hidden">
+    <div class="flex items-center">
+      <i class="fa fa-bell mr-2"></i>
+      <span id="notification-message">新消息通知</span>
+    </div>
+  </div>
+
   <script>
+    // 初始化数据
+    let currentPage = 1;
+    const postsPerPage = 3;
+    let isLoading = false;
+    let currentChatFriend = '阳光少年';
+    let currentPostId = '';
+    
     // 页面加载完成后执行
     document.addEventListener('DOMContentLoaded', function() {
-      // 检查用户是否已登录（实际项目中应该从本地存储或服务器检查）
+      // 初始化本地存储数据
+      initLocalStorageData();
+      
+      // 检查用户是否已登录
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
       
       // 如果未登录，显示登录模态框
@@ -841,6 +851,12 @@
         // 更新用户信息
         updateUserInfo();
       }
+      
+      // 加载聊天记录
+      loadChatHistory();
+      
+      // 加载帖子列表
+      loadPosts(currentPage);
       
       // 导航栏滚动效果
       window.addEventListener('scroll', function() {
@@ -899,37 +915,93 @@
         }
       });
       
-      // 登录/注册表单提交
+      // 登录/注册表单提交验证
       document.getElementById('auth-form').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const name = document.getElementById('name').value;
+        const name = document.getElementById('name').value.trim();
         const password = document.getElementById('password').value;
         
-        if (!name || !password) {
-          alert('请输入姓名和密码');
-          return;
+        let isValid = true;
+        
+        // 验证姓名
+        if (!name) {
+          document.getElementById('name-error').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('name-error').classList.add('hidden');
         }
         
+        // 验证密码
+        if (password.length < 6) {
+          document.getElementById('password-error').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('password-error').classList.add('hidden');
+        }
+        
+        if (!isValid) return;
+        
         // 模拟登录/注册成功
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('username', name);
-        localStorage.setItem('userAvatar', `https://picsum.photos/id/${Math.floor(Math.random() * 100)}/200/200`);
-        
-        // 关闭模态框
-        document.getElementById('auth-modal').classList.add('hidden');
-        
-        // 更新用户信息
-        updateUserInfo();
-        
-        alert(isLoginMode ? '登录成功' : '注册成功');
+        if (isLoginMode) {
+          // 登录逻辑
+          const users = JSON.parse(localStorage.getItem('users') || '[]');
+          const user = users.find(u => u.name === name && u.password === password);
+          
+          if (user) {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            // 更新用户信息
+            updateUserInfo();
+            
+            // 关闭模态框
+            document.getElementById('auth-modal').classList.add('hidden');
+            
+            showNotification('登录成功！欢迎回来~');
+          } else {
+            alert('用户名或密码错误');
+          }
+        } else {
+          // 注册逻辑
+          const users = JSON.parse(localStorage.getItem('users') || '[]');
+          const userExists = users.some(u => u.name === name);
+          
+          if (userExists) {
+            alert('用户名已存在，请更换用户名');
+            return;
+          }
+          
+          const newUser = {
+            id: Date.now().toString(),
+            name: name,
+            password: password,
+            nickname: name,
+            avatar: `https://picsum.photos/id/${Math.floor(Math.random() * 100)}/200/200`,
+            gender: '保密',
+            bio: '这个人很懒，什么都没有留下~',
+            studentId: `202${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`
+          };
+          
+          users.push(newUser);
+          localStorage.setItem('users', JSON.stringify(users));
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('currentUser', JSON.stringify(newUser));
+          
+          // 更新用户信息
+          updateUserInfo();
+          
+          // 关闭模态框
+          document.getElementById('auth-modal').classList.add('hidden');
+          
+          showNotification('注册成功！欢迎加入论坛~');
+        }
       });
       
       // 退出登录
       document.getElementById('logout-btn').addEventListener('click', function() {
         localStorage.setItem('isLoggedIn', 'false');
-        localStorage.removeItem('username');
-        localStorage.removeItem('userAvatar');
+        localStorage.removeItem('currentUser');
         
         // 更新用户信息
         document.getElementById('user-nickname').textContent = '游客';
@@ -941,31 +1013,20 @@
       
       // 发布帖子模态框
       document.getElementById('create-post-btn').addEventListener('click', function() {
+        // 检查登录状态
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+          document.getElementById('auth-modal').classList.remove('hidden');
+          return;
+        }
+        
         document.getElementById('post-modal').classList.remove('hidden');
+        document.getElementById('image-preview-container').innerHTML = '';
       });
       
       document.getElementById('close-post-modal').addEventListener('click', function() {
         document.getElementById('post-modal').classList.add('hidden');
-      });
-      
-      // 发布帖子表单提交
-      document.getElementById('post-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const title = document.getElementById('post-title').value;
-        const category = document.getElementById('post-category').value;
-        const content = document.getElementById('post-content').value;
-        
-        if (!title || !category || !content) {
-          alert('请填写完整信息');
-          return;
-        }
-        
-        // 模拟发布成功
-        document.getElementById('post-modal').classList.add('hidden');
-        this.reset();
-        
-        alert('帖子发布成功！');
+        document.getElementById('post-form').reset();
+        document.getElementById('image-preview-container').innerHTML = '';
       });
       
       // 图片上传区域点击事件
@@ -992,20 +1053,189 @@
         e.preventDefault();
         uploadArea.classList.remove('border-primary');
         uploadArea.classList.remove('bg-primary/5');
-        // 如需预览图片，可在此处处理 e.dataTransfer.files
+        
         if (e.dataTransfer.files.length > 0) {
-          alert(`已选择 ${e.dataTransfer.files.length} 张图片（实际项目中可添加预览功能）`);
+          handlePostImagesUpload({ target: { files: e.dataTransfer.files } });
         }
+      });
+      
+      // 图片上传处理
+      postImagesInput.addEventListener('change', handlePostImagesUpload);
+      
+      // 发布帖子表单提交
+      document.getElementById('post-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('post-title').value.trim();
+        const category = document.getElementById('post-category').value;
+        const content = document.getElementById('post-content').value.trim();
+        
+        let isValid = true;
+        
+        // 验证标题
+        if (!title || title.length > 50) {
+          document.getElementById('title-error').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('title-error').classList.add('hidden');
+        }
+        
+        // 验证分类
+        if (!category) {
+          document.getElementById('category-error').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('category-error').classList.add('hidden');
+        }
+        
+        // 验证内容
+        if (!content || content.length < 10) {
+          document.getElementById('content-error').classList.remove('hidden');
+          isValid = false;
+        } else {
+          document.getElementById('content-error').classList.add('hidden');
+        }
+        
+        if (!isValid) return;
+        
+        // 获取当前用户
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        
+        // 创建新帖子
+        const newPost = {
+          id: Date.now().toString(),
+          title: title,
+          content: content,
+          category: category,
+          categoryName: getCategoryName(category),
+          author: {
+            id: currentUser.id,
+            name: currentUser.nickname || currentUser.name,
+            avatar: currentUser.avatar || 'https://picsum.photos/id/237/200/200'
+          },
+          images: Array.from(document.querySelectorAll('#image-preview-container img')).map(img => img.src),
+          createdAt: new Date().toISOString(),
+          likes: 0,
+          comments: 0,
+          shares: 0,
+          likedBy: [],
+          commentsList: []
+        };
+        
+        // 保存到本地存储
+        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+        posts.unshift(newPost); // 添加到开头
+        localStorage.setItem('posts', JSON.stringify(posts));
+        
+        // 更新用户发布帖子数
+        updateUserPostCount();
+        
+        // 关闭模态框并重置表单
+        document.getElementById('post-modal').classList.add('hidden');
+        this.reset();
+        document.getElementById('image-preview-container').innerHTML = '';
+        
+        // 重新加载帖子列表
+        currentPage = 1;
+        loadPosts(currentPage);
+        
+        showNotification('帖子发布成功！');
+      });
+      
+      // 加载更多帖子
+      document.getElementById('load-more-btn').addEventListener('click', function() {
+        if (isLoading) return;
+        
+        currentPage++;
+        loadPosts(currentPage);
       });
       
       // 关闭用户资料模态框
       document.getElementById('close-profile-modal').addEventListener('click', function() {
         document.getElementById('profile-modal').classList.add('hidden');
+        document.getElementById('edit-profile-form').classList.add('hidden');
+        document.getElementById('edit-profile-btn').classList.remove('hidden');
+      });
+      
+      // 编辑资料按钮
+      document.getElementById('edit-profile-btn').addEventListener('click', function() {
+        document.getElementById('edit-profile-form').classList.remove('hidden');
+        this.classList.add('hidden');
+        
+        // 填充表单数据
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        document.getElementById('edit-nickname').value = currentUser.nickname || currentUser.name;
+        document.getElementById('edit-gender').value = currentUser.gender || '保密';
+        document.getElementById('edit-bio').value = currentUser.bio || '这个人很懒，什么都没有留下~';
+      });
+      
+      // 取消编辑
+      document.getElementById('cancel-edit-btn').addEventListener('click', function() {
+        document.getElementById('edit-profile-form').classList.add('hidden');
+        document.getElementById('edit-profile-btn').classList.remove('hidden');
+      });
+      
+      // 保存资料修改
+      document.getElementById('save-profile-btn').addEventListener('click', function() {
+        const nickname = document.getElementById('edit-nickname').value.trim();
+        const gender = document.getElementById('edit-gender').value;
+        const bio = document.getElementById('edit-bio').value.trim();
+        
+        if (!nickname) {
+          alert('昵称不能为空');
+          return;
+        }
+        
+        // 更新当前用户信息
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.nickname = nickname;
+        currentUser.gender = gender;
+        currentUser.bio = bio;
+        
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        // 更新用户列表中的信息
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        if (userIndex !== -1) {
+          users[userIndex] = currentUser;
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+        
+        // 更新显示
+        updateUserInfo();
+        document.getElementById('profile-nickname').textContent = nickname;
+        document.getElementById('profile-gender').textContent = gender;
+        document.getElementById('profile-bio').textContent = bio;
+        
+        // 隐藏编辑表单
+        document.getElementById('edit-profile-form').classList.add('hidden');
+        document.getElementById('edit-profile-btn').classList.remove('hidden');
+        
+        showNotification('资料修改成功！');
       });
       
       // 添加好友
       document.getElementById('add-friend-btn').addEventListener('click', function() {
-        alert('好友申请已发送！');
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        const profileName = document.getElementById('profile-name').textContent;
+        
+        if (currentUser.nickname === profileName) {
+          alert('不能添加自己为好友！');
+          return;
+        }
+        
+        // 发送好友申请
+        const friendRequests = JSON.parse(localStorage.getItem('friendRequests') || '[]');
+        friendRequests.push({
+          from: currentUser.nickname || currentUser.name,
+          to: profileName,
+          status: 'pending',
+          timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('friendRequests', JSON.stringify(friendRequests));
+        
+        showNotification('好友申请已发送！');
         document.getElementById('profile-modal').classList.add('hidden');
       });
       
@@ -1014,6 +1244,148 @@
       document.getElementById('message-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
           sendMessage();
+        }
+      });
+      
+      // 好友列表点击事件
+      document.querySelectorAll('#friends-list [data-friend]').forEach(friend => {
+        friend.addEventListener('click', function() {
+          const friendName = this.getAttribute('data-friend');
+          switchChatFriend(friendName);
+        });
+      });
+      
+      // 群聊列表点击事件
+      document.querySelectorAll('#groups-list [data-group]').forEach(group => {
+        group.addEventListener('click', function() {
+          const groupName = this.getAttribute('data-group');
+          switchChatGroup(groupName);
+        });
+      });
+      
+      // 好友申请点击事件
+      document.getElementById('friend-requests').addEventListener('click', function() {
+        document.getElementById('friend-request-modal').classList.remove('hidden');
+      });
+      
+      // 群聊和好友标签切换
+      document.getElementById('friends-tab').addEventListener('click', function() {
+        document.getElementById('friends-list').classList.remove('hidden');
+        document.getElementById('groups-list').classList.add('hidden');
+        this.classList.add('text-primary', 'border-b-2', 'border-primary');
+        document.getElementById('groups-tab').classList.remove('text-primary', 'border-b-2', 'border-primary');
+      });
+      
+      document.getElementById('groups-tab').addEventListener('click', function() {
+        document.getElementById('friends-list').classList.add('hidden');
+        document.getElementById('groups-list').classList.remove('hidden');
+        this.classList.add('text-primary', 'border-b-2', 'border-primary');
+        document.getElementById('friends-tab').classList.remove('text-primary', 'border-b-2', 'border-primary');
+      });
+      
+      // 聊天功能按钮
+      document.getElementById('voice-call-btn').addEventListener('click', function() {
+        alert('语音通话功能正在开发中...');
+      });
+      
+      document.getElementById('video-call-btn').addEventListener('click', function() {
+        alert('视频通话功能正在开发中...');
+      });
+      
+      document.getElementById('friend-info-btn').addEventListener('click', function() {
+        showFriendProfile(currentChatFriend);
+      });
+      
+      document.getElementById('emoji-btn').addEventListener('click', function() {
+        alert('表情功能正在开发中...');
+      });
+      
+      document.getElementById('file-btn').addEventListener('click', function() {
+        alert('文件发送功能正在开发中...');
+      });
+      
+      document.getElementById('voice-btn').addEventListener('click', function() {
+        alert('语音消息功能正在开发中...');
+      });
+      
+      // 聊天图片上传
+      document.getElementById('chat-image-upload').addEventListener('change', handleChatImageUpload);
+      
+      // 头像上传
+      document.getElementById('avatar-upload').addEventListener('change', handleAvatarUpload);
+      
+      // 设置模态框
+      document.getElementById('close-settings-modal').addEventListener('click', function() {
+        document.getElementById('settings-modal').classList.add('hidden');
+      });
+      
+      document.getElementById('save-settings-btn').addEventListener('click', function() {
+        showNotification('设置已保存！');
+        document.getElementById('settings-modal').classList.add('hidden');
+      });
+      
+      // 好友申请模态框
+      document.getElementById('close-friend-request-modal').addEventListener('click', function() {
+        document.getElementById('friend-request-modal').classList.add('hidden');
+      });
+      
+      // 评论模态框
+      document.getElementById('close-comment-modal').addEventListener('click', function() {
+        document.getElementById('comment-modal').classList.add('hidden');
+      });
+      
+      document.getElementById('submit-comment').addEventListener('click', function() {
+        const commentInput = document.getElementById('comment-input');
+        const comment = commentInput.value.trim();
+        
+        if (!comment) {
+          alert('请输入评论内容');
+          return;
+        }
+        
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        
+        if (!currentUser.id) {
+          document.getElementById('auth-modal').classList.remove('hidden');
+          document.getElementById('comment-modal').classList.add('hidden');
+          return;
+        }
+        
+        // 添加评论
+        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+        const postIndex = posts.findIndex(p => p.id === currentPostId);
+        
+        if (postIndex !== -1) {
+          const post = posts[postIndex];
+          
+          if (!post.commentsList) {
+            post.commentsList = [];
+          }
+          
+          post.commentsList.push({
+            id: Date.now().toString(),
+            author: {
+              id: currentUser.id,
+              name: currentUser.nickname || currentUser.name,
+              avatar: currentUser.avatar || 'https://picsum.photos/id/237/200/200'
+            },
+            content: comment,
+            createdAt: new Date().toISOString()
+          });
+          
+          post.comments = post.commentsList.length;
+          
+          localStorage.setItem('posts', JSON.stringify(posts));
+          
+          // 重新加载帖子
+          currentPage = 1;
+          loadPosts(currentPage);
+          
+          // 关闭评论模态框
+          document.getElementById('comment-modal').classList.add('hidden');
+          commentInput.value = '';
+          
+          showNotification('评论发表成功！');
         }
       });
       
@@ -1044,6 +1416,17 @@
         modal.addEventListener('click', function(e) {
           if (e.target === modal) {
             modal.classList.add('hidden');
+            if (modalId === 'profile-modal') {
+              document.getElementById('edit-profile-form').classList.add('hidden');
+              document.getElementById('edit-profile-btn').classList.remove('hidden');
+            }
+            if (modalId === 'post-modal') {
+              document.getElementById('post-form').reset();
+              document.getElementById('image-preview-container').innerHTML = '';
+            }
+            if (modalId === 'comment-modal') {
+              document.getElementById('comment-input').value = '';
+            }
           }
         });
       }
@@ -1052,122 +1435,825 @@
       closeModalOnOutsideClick('auth-modal');
       closeModalOnOutsideClick('post-modal');
       closeModalOnOutsideClick('profile-modal');
+      closeModalOnOutsideClick('settings-modal');
+      closeModalOnOutsideClick('friend-request-modal');
+      closeModalOnOutsideClick('comment-modal');
     });
     
-    // 更新用户信息
-    function updateUserInfo() {
-      const username = localStorage.getItem('username');
-      const avatar = localStorage.getItem('userAvatar');
+    // 初始化本地存储数据
+    function initLocalStorageData() {
+      // 初始化用户数据
+      if (!localStorage.getItem('users')) {
+        const defaultUsers = [
+          {
+            id: '1',
+            name: '阳光少年',
+            password: '123456',
+            nickname: '阳光少年',
+            avatar: 'https://picsum.photos/id/1025/200/200',
+            gender: '男',
+            bio: '初二(3)班学生，喜欢运动和摄影，欢迎大家加我好友~',
+            studentId: '20210315'
+          },
+          {
+            id: '2',
+            name: '学霸君',
+            password: '123456',
+            nickname: '学霸君',
+            avatar: 'https://picsum.photos/id/1074/200/200',
+            gender: '男',
+            bio: '初二(1)班学习委员，数学爱好者，乐于分享学习经验~',
+            studentId: '20210108'
+          }
+        ];
+        localStorage.setItem('users', JSON.stringify(defaultUsers));
+      }
       
-      if (username && avatar) {
-        document.getElementById('user-nickname').textContent = username;
-        document.getElementById('user-avatar').src = avatar;
+      // 初始化帖子数据
+      if (!localStorage.getItem('posts')) {
+        const defaultPosts = [
+          {
+            id: '1',
+            title: '学校秋季运动会将于下周五举行，大家准备好了吗？',
+            content: '听说今年运动会增加了不少新项目，还有团体接力赛，有没有同学想一起组队的？我们班还缺几个人...',
+            category: 'activity',
+            categoryName: '校园活动',
+            author: {
+              id: '1',
+              name: '阳光少年',
+              avatar: 'https://picsum.photos/id/1025/200/200'
+            },
+            images: ['https://picsum.photos/id/1060/300/200', 'https://picsum.photos/id/1062/300/200'],
+            createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+            likes: 32,
+            comments: 2,
+            shares: 5,
+            likedBy: ['2'],
+            commentsList: [
+              {
+                id: '1',
+                author: {
+                  id: '2',
+                  name: '学霸君',
+                  avatar: 'https://picsum.photos/id/1074/200/200'
+                },
+                content: '我要报名接力赛！',
+                createdAt: new Date(Date.now() - 60 * 60 * 1000).toISOString()
+              },
+              {
+                id: '2',
+                author: {
+                  id: '1',
+                  name: '阳光少年',
+                  avatar: 'https://picsum.photos/id/1025/200/200'
+                },
+                content: '太好了！我们班现在有5个人报名了',
+                createdAt: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+              }
+            ]
+          },
+          {
+            id: '2',
+            title: '分享一些数学期中考试的复习技巧，希望对大家有帮助',
+            content: '1. 重点复习函数和几何部分，这两部分占分比较大\n2. 多做模拟题，尤其是往年的真题\n3. 整理错题本，考前再看一遍...\n\n需要详细复习资料的可以留言，我可以分享给大家~',
+            category: 'study',
+            categoryName: '学习交流',
+            author: {
+              id: '2',
+              name: '学霸君',
+              avatar: 'https://picsum.photos/id/1074/200/200'
+            },
+            images: [],
+            createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+            likes: 78,
+            comments: 1,
+            shares: 23,
+            likedBy: ['1'],
+            commentsList: [
+              {
+                id: '1',
+                author: {
+                  id: '1',
+                  name: '阳光少年',
+                  avatar: 'https://picsum.photos/id/1025/200/200'
+                },
+                content: '太感谢了！数学一直是我的弱项',
+                createdAt: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString()
+              }
+            ]
+          }
+        ];
+        localStorage.setItem('posts', JSON.stringify(defaultPosts));
+      }
+      
+      // 初始化聊天记录
+      if (!localStorage.getItem('chatHistory')) {
+        const defaultChat = [
+          {
+            sender: 'friend',
+            message: '嗨，你看到学校运动会的通知了吗？',
+            timestamp: new Date(Date.now() - 10 * 60 * 1000).toISOString()
+          },
+          {
+            sender: 'me',
+            message: '看到了，下周五对吧？打算报什么项目？',
+            timestamp: new Date(Date.now() - 8 * 60 * 1000).toISOString()
+          },
+          {
+            sender: 'friend',
+            message: '我想报100米和跳远，你呢？',
+            timestamp: new Date(Date.now() - 6 * 60 * 1000).toISOString()
+          },
+          {
+            sender: 'me',
+            message: '我可能报个接力赛吧，单项不太擅长',
+            timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString()
+          }
+        ];
+        localStorage.setItem('chatHistory', JSON.stringify(defaultChat));
+      }
+      
+      // 初始化好友申请
+      if (!localStorage.getItem('friendRequests')) {
+        const defaultRequests = [
+          {
+            from: '学霸君',
+            to: '阳光少年',
+            status: 'pending',
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+          }
+        ];
+        localStorage.setItem('friendRequests', JSON.stringify(defaultRequests));
       }
     }
     
-    // 显示用户资料（全局函数，供HTML直接调用）
-    window.showUserProfile = function(userId) {
-      // 模拟根据用户ID切换不同用户资料（可扩展为真实接口请求）
-      const userProfiles = {
-        2: {
-          avatar: 'https://picsum.photos/id/1025/200/200',
-          name: '阳光少年',
-          id: '20210315',
-          nickname: '阳光少年',
-          gender: '男',
-          bio: '初二(3)班学生，喜欢运动和摄影，欢迎大家加我好友~'
-        },
-        3: {
-          avatar: 'https://picsum.photos/id/1074/200/200',
-          name: '学霸君',
-          id: '20210108',
-          nickname: '学霸君',
-          gender: '男',
-          bio: '初二(1)班学习委员，数学爱好者，乐于分享学习经验~'
-        },
-        4: {
-          avatar: 'https://picsum.photos/id/1082/200/200',
-          name: '文艺委员',
-          id: '20210223',
-          nickname: '文艺委员',
-          gender: '女',
-          bio: '初二(2)班文艺委员，热爱话剧和音乐，话剧社社长~'
-        }
-      };
+    // 更新用户信息
+    function updateUserInfo() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
       
-      const profile = userProfiles[userId] || userProfiles[2];
-      // 更新模态框内容
-      document.getElementById('profile-avatar').src = profile.avatar;
-      document.getElementById('profile-name').textContent = profile.name;
-      document.getElementById('profile-id').textContent = `学号: ${profile.id}`;
-      document.getElementById('profile-nickname').textContent = profile.nickname;
-      document.getElementById('profile-gender').textContent = profile.gender;
-      document.getElementById('profile-bio').textContent = profile.bio;
-      
-      // 显示模态框
-      document.getElementById('profile-modal').classList.remove('hidden');
-    };
+      if (currentUser && currentUser.nickname) {
+        document.getElementById('user-nickname').textContent = currentUser.nickname;
+        document.getElementById('user-avatar').src = currentUser.avatar || 'https://picsum.photos/id/237/200/200';
+      }
+    }
     
-    // 发送消息
-    function sendMessage() {
-      const input = document.getElementById('message-input');
-      const message = input.value.trim();
+    // 加载帖子列表
+    function loadPosts(page) {
+      const postsContainer = document.getElementById('posts-container');
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      const loadingIndicator = document.getElementById('loading-indicator');
       
-      if (!message) return;
+      if (page === 1) {
+        postsContainer.innerHTML = '';
+      }
       
-      const chatMessages = document.getElementById('chat-messages');
-      const now = new Date();
-      const timeString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+      isLoading = true;
+      loadingIndicator.classList.remove('hidden');
+      loadMoreBtn.classList.add('hidden');
       
-      // 创建消息元素
-      const messageElement = document.createElement('div');
-      messageElement.className = 'flex items-end justify-end space-x-2 max-w-[80%] ml-auto';
-      messageElement.innerHTML = `
-        <div class="text-right">
-          <p class="bg-primary text-white rounded-lg rounded-tr-none px-4 py-2 shadow-sm">${message}</p>
-          <p class="text-xs text-neutral-dark mt-1">${timeString}</p>
+      // 模拟加载延迟
+      setTimeout(() => {
+        const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+        const startIndex = (page - 1) * postsPerPage;
+        const endIndex = startIndex + postsPerPage;
+        const postsToShow = posts.slice(startIndex, endIndex);
+        
+        if (postsToShow.length === 0) {
+          loadMoreBtn.classList.add('hidden');
+          loadingIndicator.classList.add('hidden');
+          isLoading = false;
+          return;
+        }
+        
+        postsToShow.forEach(post => {
+          const postElement = createPostElement(post);
+          postsContainer.appendChild(postElement);
+        });
+        
+        loadingIndicator.classList.add('hidden');
+        loadMoreBtn.classList.remove('hidden');
+        isLoading = false;
+        
+        // 如果没有更多帖子了，隐藏加载更多按钮
+        if (endIndex >= posts.length) {
+          loadMoreBtn.classList.add('hidden');
+        }
+      }, 500);
+    }
+    
+    // 创建帖子元素
+    function createPostElement(post) {
+      const postElement = document.createElement('div');
+      postElement.className = 'bg-white rounded-xl shadow-sm p-6 transition-all hover:shadow-md';
+      
+      const timeAgo = getTimeAgo(post.createdAt);
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      const isLiked = post.likedBy && post.likedBy.includes(currentUser.id);
+      
+      postElement.innerHTML = `
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <img src="${post.author.avatar}" alt="${post.author.name}" class="w-10 h-10 rounded-full object-cover cursor-pointer" onclick="showUserProfile('${post.author.id}')">
+            <div>
+              <p class="font-medium cursor-pointer" onclick="showUserProfile('${post.author.id}')">${post.author.name}</p>
+              <p class="text-xs text-neutral-dark">${timeAgo}</p>
+            </div>
+          </div>
+          <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full">${post.categoryName}</span>
         </div>
-        <img src="${localStorage.getItem('userAvatar') || 'https://picsum.photos/id/237/200/200'}" alt="我的头像" class="w-8 h-8 rounded-full object-cover">
+        
+        <h3 class="text-lg font-semibold mb-2">${post.title}</h3>
+        <p class="text-neutral-dark mb-4 whitespace-pre-line">${post.content}</p>
+        
+        ${post.images && post.images.length > 0 ? `
+          <div class="grid grid-cols-${Math.min(post.images.length, 3)} gap-2 mb-4">
+            ${post.images.map(img => `<img src="${img}" alt="帖子图片" class="w-full h-32 object-cover rounded-lg">`).join('')}
+          </div>
+        ` : ''}
+        
+        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+          <div class="flex space-x-4">
+            <button class="flex items-center space-x-1 ${isLiked ? 'text-primary' : 'text-neutral-dark'} hover:text-primary transition-colors" data-post-id="${post.id}" onclick="toggleLike('${post.id}')">
+              <i class="fa ${isLiked ? 'fa-thumbs-up' : 'fa-thumbs-o-up'}"></i>
+              <span>${post.likes}</span>
+            </button>
+            <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors" data-post-id="${post.id}" onclick="showCommentModal('${post.id}')">
+              <i class="fa fa-comment-o"></i>
+              <span>${post.comments}</span>
+            </button>
+            <button class="flex items-center space-x-1 text-neutral-dark hover:text-primary transition-colors" data-post-id="${post.id}" onclick="sharePost('${post.id}')">
+              <i class="fa fa-share-alt"></i>
+              <span>${post.shares}</span>
+            </button>
+          </div>
+          <button class="text-neutral-dark hover:text-primary transition-colors">
+            <i class="fa fa-bookmark-o"></i>
+          </button>
+        </div>
+        
+        ${post.commentsList && post.commentsList.length > 0 ? `
+          <div class="mt-4 pt-4 border-t border-gray-100">
+            <h4 class="text-sm font-medium mb-2">评论</h4>
+            ${post.commentsList.slice(0, 2).map(comment => `
+              <div class="flex items-start space-x-2 mb-2">
+                <img src="${comment.author.avatar}" alt="${comment.author.name}" class="w-6 h-6 rounded-full object-cover mt-1 cursor-pointer" onclick="showUserProfile('${comment.author.id}')">
+                <div>
+                  <p class="text-sm font-medium cursor-pointer" onclick="showUserProfile('${comment.author.id}')">${comment.author.name}</p>
+                  <p class="text-sm text-neutral-dark">${comment.content}</p>
+                  <p class="text-xs text-neutral-dark">${getTimeAgo(comment.createdAt)}</p>
+                </div>
+              </div>
+            `).join('')}
+            ${post.commentsList.length > 2 ? `<p class="text-xs text-primary cursor-pointer" onclick="showAllComments('${post.id}')">查看全部${post.commentsList.length}条评论</p>` : ''}
+          </div>
+        ` : ''}
       `;
       
-      // 添加到聊天区域
-      chatMessages.appendChild(messageElement);
+      return postElement;
+    }
+    
+    // 获取时间差
+    function getTimeAgo(timestamp) {
+      const now = new Date();
+      const postDate = new Date(timestamp);
+      const diffMs = now - postDate;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+      
+      if (diffMins < 1) return '刚刚';
+      if (diffMins < 60) return `${diffMins}分钟前`;
+      if (diffHours < 24) return `${diffHours}小时前`;
+      if (diffDays < 7) return `${diffDays}天前`;
+      
+      return postDate.toLocaleDateString('zh-CN');
+    }
+    
+    // 获取分类名称
+    function getCategoryName(category) {
+      const categoryMap = {
+        'study': '学习交流',
+        'activity': '校园活动',
+        'club': '社团招新',
+        'help': '求助问答',
+        'chat': '闲聊灌水'
+      };
+      
+      return categoryMap[category] || '其他';
+    }
+    
+    // 加载聊天记录
+    function loadChatHistory() {
+      const chatMessages = document.getElementById('chat-messages');
+      const chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+      
+      chatMessages.innerHTML = '';
+      
+      chatHistory.forEach(msg => {
+        const messageElement = document.createElement('div');
+        messageElement.className = `flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`;
+        
+        messageElement.innerHTML = `
+          <div class="max-w-xs md:max-w-md ${msg.sender === 'me' ? 'bg-primary text-white' : 'bg-white'} rounded-lg p-3 shadow-sm">
+            <p>${msg.message}</p>
+            <p class="text-xs opacity-70 mt-1">${new Date(msg.timestamp).toLocaleTimeString('zh-CN', {hour: '2-digit', minute:'2-digit'})}</p>
+          </div>
+        `;
+        
+        chatMessages.appendChild(messageElement);
+      });
       
       // 滚动到底部
       chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // 发送消息
+    function sendMessage() {
+      const messageInput = document.getElementById('message-input');
+      const message = messageInput.value.trim();
+      
+      if (!message) return;
+      
+      // 获取聊天记录
+      const chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+      
+      // 添加新消息
+      chatHistory.push({
+        sender: 'me',
+        message: message,
+        timestamp: new Date().toISOString()
+      });
+      
+      // 保存到本地存储
+      localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
       
       // 清空输入框
-      input.value = '';
+      messageInput.value = '';
+      
+      // 重新加载聊天记录
+      loadChatHistory();
       
       // 模拟好友回复
       setTimeout(() => {
         const replies = [
-          "好的，我知道了",
-          "太棒了！",
-          "我稍后回复你",
-          "这个主意不错",
-          "我也是这么想的",
-          "一起加油呀！",
-          "好呀好呀，没问题~",
-          "谢谢分享！"
+          '听起来不错！',
+          '我也这么觉得',
+          '那我们到时候见',
+          '好的，没问题',
+          '谢谢你的建议'
         ];
+        
         const randomReply = replies[Math.floor(Math.random() * replies.length)];
         
-        const replyElement = document.createElement('div');
-        replyElement.className = 'flex items-end space-x-2 max-w-[80%]';
-        replyElement.innerHTML = `
-          <img src="https://picsum.photos/id/1025/200/200" alt="好友头像" class="w-8 h-8 rounded-full object-cover">
-          <div>
-            <p class="bg-white rounded-lg rounded-tl-none px-4 py-2 shadow-sm">${randomReply}</p>
-            <p class="text-xs text-neutral-dark mt-1">${timeString}</p>
-          </div>
-        `;
+        const updatedChatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+        updatedChatHistory.push({
+          sender: 'friend',
+          message: randomReply,
+          timestamp: new Date().toISOString()
+        });
         
-        chatMessages.appendChild(replyElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        localStorage.setItem('chatHistory', JSON.stringify(updatedChatHistory));
+        loadChatHistory();
       }, 1000 + Math.random() * 2000);
+    }
+    
+    // 切换聊天好友
+    function switchChatFriend(friendName) {
+      currentChatFriend = friendName;
+      document.getElementById('chat-friend-name').textContent = friendName;
+      document.getElementById('chat-status').textContent = '在线';
+      
+      // 重置聊天记录
+      const defaultChat = [
+        {
+          sender: 'friend',
+          message: `嗨，我是${friendName}，很高兴和你聊天！`,
+          timestamp: new Date().toISOString()
+        }
+      ];
+      localStorage.setItem('chatHistory', JSON.stringify(defaultChat));
+      loadChatHistory();
+      
+      // 更新好友列表中的选中状态
+      document.querySelectorAll('#friends-list [data-friend]').forEach(friend => {
+        if (friend.getAttribute('data-friend') === friendName) {
+          friend.classList.add('bg-primary/5', 'border-l-4', 'border-primary');
+        } else {
+          friend.classList.remove('bg-primary/5', 'border-l-4', 'border-primary');
+        }
+      });
+    }
+    
+    // 切换群聊
+    function switchChatGroup(groupName) {
+      document.getElementById('chat-friend-name').textContent = groupName;
+      document.getElementById('chat-status').textContent = '群聊 - 5人在线';
+      
+      // 重置聊天记录
+      const defaultChat = [
+        {
+          sender: 'friend',
+          message: `欢迎来到${groupName}！`,
+          timestamp: new Date().toISOString()
+        }
+      ];
+      localStorage.setItem('chatHistory', JSON.stringify(defaultChat));
+      loadChatHistory();
+      
+      // 更新群聊列表中的选中状态
+      document.querySelectorAll('#groups-list [data-group]').forEach(group => {
+        if (group.getAttribute('data-group') === groupName) {
+          group.classList.add('bg-primary/5', 'border-l-4', 'border-primary');
+        } else {
+          group.classList.remove('bg-primary/5', 'border-l-4', 'border-primary');
+        }
+      });
+    }
+    
+    // 显示我的个人资料
+    function showMyProfile() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      
+      if (!currentUser.id) {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        return;
+      }
+      
+      // 填充个人资料
+      document.getElementById('profile-avatar').src = currentUser.avatar || 'https://picsum.photos/id/237/200/200';
+      document.getElementById('profile-name').textContent = currentUser.nickname || currentUser.name;
+      document.getElementById('profile-id').textContent = `学号: ${currentUser.studentId || '未设置'}`;
+      document.getElementById('profile-nickname').textContent = currentUser.nickname || currentUser.name;
+      document.getElementById('profile-gender').textContent = currentUser.gender || '保密';
+      document.getElementById('profile-bio').textContent = currentUser.bio || '这个人很懒，什么都没有留下~';
+      
+      // 计算帖子数量
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      const userPosts = posts.filter(post => post.author.id === currentUser.id);
+      document.getElementById('post-count').textContent = userPosts.length;
+      
+      // 设置最近动态
+      if (userPosts.length > 0) {
+        const latestPost = userPosts[0];
+        document.getElementById('latest-activity').textContent = `${getTimeAgo(latestPost.createdAt)} 发布了"${latestPost.title}"`;
+      } else {
+        document.getElementById('latest-activity').textContent = '暂无动态';
+      }
+      
+      // 隐藏加好友按钮
+      document.getElementById('add-friend-btn').classList.add('hidden');
+      
+      // 显示模态框
+      document.getElementById('profile-modal').classList.remove('hidden');
+    }
+    
+    // 显示用户资料
+    function showUserProfile(userId) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.id === userId);
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      
+      if (!user) {
+        alert('用户不存在');
+        return;
+      }
+      
+      // 填充个人资料
+      document.getElementById('profile-avatar').src = user.avatar || 'https://picsum.photos/id/237/200/200';
+      document.getElementById('profile-name').textContent = user.nickname || user.name;
+      document.getElementById('profile-id').textContent = `学号: ${user.studentId || '未设置'}`;
+      document.getElementById('profile-nickname').textContent = user.nickname || user.name;
+      document.getElementById('profile-gender').textContent = user.gender || '保密';
+      document.getElementById('profile-bio').textContent = user.bio || '这个人很懒，什么都没有留下~';
+      
+      // 计算帖子数量
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      const userPosts = posts.filter(post => post.author.id === userId);
+      document.getElementById('post-count').textContent = userPosts.length;
+      
+      // 设置最近动态
+      if (userPosts.length > 0) {
+        const latestPost = userPosts[0];
+        document.getElementById('latest-activity').textContent = `${getTimeAgo(latestPost.createdAt)} 发布了"${latestPost.title}"`;
+      } else {
+        document.getElementById('latest-activity').textContent = '暂无动态';
+      }
+      
+      // 如果是查看自己的资料，隐藏加好友按钮
+      if (currentUser.id === userId) {
+        document.getElementById('add-friend-btn').classList.add('hidden');
+        document.getElementById('edit-profile-btn').classList.remove('hidden');
+      } else {
+        document.getElementById('add-friend-btn').classList.remove('hidden');
+        document.getElementById('edit-profile-btn').classList.add('hidden');
+      }
+      
+      // 显示模态框
+      document.getElementById('profile-modal').classList.remove('hidden');
+    }
+    
+    // 显示好友资料
+    function showFriendProfile(friendName) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.nickname === friendName);
+      
+      if (user) {
+        showUserProfile(user.id);
+      } else {
+        alert('好友信息不存在');
+      }
+    }
+    
+    // 显示设置
+    function showSettings() {
+      document.getElementById('settings-modal').classList.remove('hidden');
+    }
+    
+    // 处理帖子图片上传
+    function handlePostImagesUpload(event) {
+      const files = event.target.files;
+      const previewContainer = document.getElementById('image-preview-container');
+      
+      // 限制最多5张图片
+      const currentImages = previewContainer.querySelectorAll('img').length;
+      const remainingSlots = 5 - currentImages;
+      
+      if (files.length > remainingSlots) {
+        alert(`最多只能上传5张图片，您还可以上传${remainingSlots}张`);
+        return;
+      }
+      
+      for (let i = 0; i < Math.min(files.length, remainingSlots); i++) {
+        const file = files[i];
+        
+        if (!file.type.match('image.*')) {
+          alert('请上传图片文件');
+          continue;
+        }
+        
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          const imgElement = document.createElement('div');
+          imgElement.className = 'relative';
+          imgElement.innerHTML = `
+            <img src="${e.target.result}" alt="预览图片" class="w-24 h-24 object-cover rounded-lg">
+            <button type="button" class="absolute -top-2 -right-2 bg-secondary text-white rounded-full w-5 h-5 flex items-center justify-center text-xs" onclick="this.parentElement.remove()">
+              <i class="fa fa-times"></i>
+            </button>
+          `;
+          
+          previewContainer.appendChild(imgElement);
+        };
+        
+        reader.readAsDataURL(file);
+      }
+    }
+    
+    // 处理头像上传
+    function handleAvatarUpload(event) {
+      const file = event.target.files[0];
+      
+      if (!file || !file.type.match('image.*')) {
+        alert('请上传图片文件');
+        return;
+      }
+      
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        // 更新头像
+        document.getElementById('profile-avatar').src = e.target.result;
+        document.getElementById('user-avatar').src = e.target.result;
+        
+        // 更新本地存储
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        currentUser.avatar = e.target.result;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        // 更新用户列表中的头像
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        if (userIndex !== -1) {
+          users[userIndex].avatar = e.target.result;
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+        
+        showNotification('头像更新成功！');
+      };
+      
+      reader.readAsDataURL(file);
+    }
+    
+    // 处理聊天图片上传
+    function handleChatImageUpload(event) {
+      const file = event.target.files[0];
+      
+      if (!file || !file.type.match('image.*')) {
+        alert('请上传图片文件');
+        return;
+      }
+      
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        // 获取聊天记录
+        const chatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+        
+        // 添加图片消息
+        chatHistory.push({
+          sender: 'me',
+          message: `<img src="${e.target.result}" alt="聊天图片" class="max-w-xs rounded-lg">`,
+          timestamp: new Date().toISOString()
+        });
+        
+        // 保存到本地存储
+        localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+        
+        // 重新加载聊天记录
+        loadChatHistory();
+        
+        // 模拟好友回复
+        setTimeout(() => {
+          const updatedChatHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+          updatedChatHistory.push({
+            sender: 'friend',
+            message: '图片拍得不错！',
+            timestamp: new Date().toISOString()
+          });
+          
+          localStorage.setItem('chatHistory', JSON.stringify(updatedChatHistory));
+          loadChatHistory();
+        }, 1000 + Math.random() * 2000);
+      };
+      
+      reader.readAsDataURL(file);
+    }
+    
+    // 更新用户帖子数量
+    function updateUserPostCount() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      const userPosts = posts.filter(post => post.author.id === currentUser.id);
+      
+      document.getElementById('post-count').textContent = userPosts.length;
+    }
+    
+    // 显示通知
+    function showNotification(message) {
+      const toast = document.getElementById('notification-toast');
+      const messageElement = document.getElementById('notification-message');
+      
+      messageElement.textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+        
+        setTimeout(() => {
+          toast.classList.add('hidden');
+        }, 300);
+      }, 3000);
+    }
+    
+    // 点赞功能
+    function toggleLike(postId) {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      
+      if (!currentUser.id) {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        return;
+      }
+      
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      const postIndex = posts.findIndex(p => p.id === postId);
+      
+      if (postIndex !== -1) {
+        const post = posts[postIndex];
+        
+        if (!post.likedBy) {
+          post.likedBy = [];
+        }
+        
+        const userIndex = post.likedBy.indexOf(currentUser.id);
+        
+        if (userIndex === -1) {
+          // 点赞
+          post.likedBy.push(currentUser.id);
+          post.likes++;
+        } else {
+          // 取消点赞
+          post.likedBy.splice(userIndex, 1);
+          post.likes--;
+        }
+        
+        localStorage.setItem('posts', JSON.stringify(posts));
+        
+        // 重新加载帖子
+        currentPage = 1;
+        loadPosts(currentPage);
+        
+        showNotification(userIndex === -1 ? '点赞成功！' : '已取消点赞');
+      }
+    }
+    
+    // 显示评论模态框
+    function showCommentModal(postId) {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      
+      if (!currentUser.id) {
+        document.getElementById('auth-modal').classList.remove('hidden');
+        return;
+      }
+      
+      currentPostId = postId;
+      
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      const post = posts.find(p => p.id === postId);
+      
+      if (post) {
+        let commentsHtml = '';
+        
+        if (post.commentsList && post.commentsList.length > 0) {
+          post.commentsList.forEach(comment => {
+            commentsHtml += `
+              <div class="flex items-start space-x-3 mb-4 pb-4 border-b border-gray-100">
+                <img src="${comment.author.avatar}" alt="${comment.author.name}" class="w-8 h-8 rounded-full object-cover cursor-pointer" onclick="showUserProfile('${comment.author.id}')">
+                <div class="flex-grow">
+                  <p class="font-medium text-sm cursor-pointer" onclick="showUserProfile('${comment.author.id}')">${comment.author.name}</p>
+                  <p class="text-neutral-dark text-sm mt-1">${comment.content}</p>
+                  <p class="text-xs text-neutral-dark mt-1">${getTimeAgo(comment.createdAt)}</p>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          commentsHtml = '<p class="text-center text-neutral-dark py-4">暂无评论</p>';
+        }
+        
+        document.getElementById('comment-content').innerHTML = commentsHtml;
+        document.getElementById('comment-modal').classList.remove('hidden');
+      }
+    }
+    
+    // 分享帖子
+    function sharePost(postId) {
+      const posts = JSON.parse(localStorage.getItem('posts') || '[]');
+      const post = posts.find(p => p.id === postId);
+      
+      if (post) {
+        post.shares++;
+        localStorage.setItem('posts', JSON.stringify(posts));
+        
+        // 重新加载帖子
+        currentPage = 1;
+        loadPosts(currentPage);
+        
+        showNotification('分享成功！');
+      }
+    }
+    
+    // 显示所有评论
+    function showAllComments(postId) {
+      showCommentModal(postId);
+    }
+    
+    // 接受好友申请
+    function acceptFriendRequest(friendName) {
+      const friendRequests = JSON.parse(localStorage.getItem('friendRequests') || '[]');
+      const requestIndex = friendRequests.findIndex(r => r.from === friendName && r.status === 'pending');
+      
+      if (requestIndex !== -1) {
+        friendRequests[requestIndex].status = 'accepted';
+        localStorage.setItem('friendRequests', JSON.stringify(friendRequests));
+        
+        document.getElementById('friend-request-modal').classList.add('hidden');
+        showNotification(`已接受 ${friendName} 的好友申请`);
+        
+        // 更新好友申请数量
+        document.getElementById('friend-requests').querySelector('span').textContent = '0';
+      }
+    }
+    
+    // 拒绝好友申请
+    function rejectFriendRequest(friendName) {
+      const friendRequests = JSON.parse(localStorage.getItem('friendRequests') || '[]');
+      const requestIndex = friendRequests.findIndex(r => r.from === friendName && r.status === 'pending');
+      
+      if (requestIndex !== -1) {
+        friendRequests[requestIndex].status = 'rejected';
+        localStorage.setItem('friendRequests', JSON.stringify(friendRequests));
+        
+        document.getElementById('friend-request-modal').classList.add('hidden');
+        showNotification(`已拒绝 ${friendName} 的好友申请`);
+        
+        // 更新好友申请数量
+        document.getElementById('friend-requests').querySelector('span').textContent = '0';
+      }
     }
   </script>
 </body>
-
 </html>
